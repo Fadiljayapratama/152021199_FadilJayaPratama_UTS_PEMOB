@@ -11,9 +11,17 @@ import 'package:project_pemob/screens/konversisuhu_screens.dart';
 import 'package:project_pemob/screens/konversiuang_screens.dart';
 import 'package:project_pemob/screens/konversipanjang_screens.dart';
 import 'package:project_pemob/screens/about_screens.dart';
+import 'package:project_pemob/screens/listview.dart';
+import 'package:project_pemob/screens/crud_screens.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:project_pemob/firebase_options.dart';
 
-void main() {
-  runApp(const MyApp());
+
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {

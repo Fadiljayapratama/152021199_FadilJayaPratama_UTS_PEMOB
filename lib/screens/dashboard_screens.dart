@@ -5,6 +5,7 @@ import 'package:project_pemob/screens/kalkulator_screens.dart';
 import 'package:project_pemob/screens/konversipanjang_screens.dart';
 import 'package:project_pemob/screens/konversisuhu_screens.dart';
 import 'package:project_pemob/screens/konversiuang_screens.dart';
+import 'package:project_pemob/screens/listview.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
@@ -194,7 +195,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => TemperatureConverter(),
+                          builder: (context) => CustomListView(),
                         ));
                   },
                   child: Padding(
@@ -215,7 +216,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           children: [
                             Icon(CupertinoIcons.sun_max, size: 75),
                             Text(
-                              'Temperature',
+                              'DATA GEMPA',
                               style: TextStyle(fontFamily: 'Poppins Bold'),
                             )
                           ],

@@ -1,9 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:project_pemob/screens/dashboard_screens.dart';
 import 'package:project_pemob/screens/home_screen.dart';
+import 'package:project_pemob/screens/firebase_auth_services.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  bool _isSigning = false;
+  final FirebaseAuthService _auth = FirebaseAuthService();
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }  
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -41,6 +60,7 @@ class LoginScreen extends StatelessWidget {
             Padding(
               padding: EdgeInsets.only(top: 9, right: 20, left: 20),
               child: TextField(
+                controller: _emailController,
                 decoration: InputDecoration(
                   filled: true,
                   fillColor: Colors.grey[200],
@@ -60,6 +80,7 @@ class LoginScreen extends StatelessWidget {
             Padding(
               padding: EdgeInsets.only(top: 9, right: 20, left: 20),
               child: TextField(
+                controller: _passwordController,
                 decoration: InputDecoration(
                   filled: true,
                   fillColor: Colors.grey[200],
@@ -76,11 +97,7 @@ class LoginScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10),
                     child: InkWell(
                       onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => HomeScreen(),
-                            ));
+                        _signIn();
                       },
                       child: Padding(
                         padding:
@@ -101,6 +118,75 @@ class LoginScreen extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+  void _signIn() async {
+    setState(() {
+      _isSigning = true;
+    });
+
+    String email = _emailController.text;
+    String password = _passwordController.text;
+
+    User? user = await _auth.signInWithEmailAndPassword(email, password);
+
+    setState(() {
+      _isSigning = false;
+    });
+
+    if (user != null) {
+      _showSuccessDialog();
+      print("User is successfully signed in");
+    } else {
+      _showErrorDialog();
+      print("Email atau Password Salah!");
+    }
+  }
+
+  void _showSuccessDialog() {
+    List<String> emailParts = _emailController.text.split('@');
+    String username = emailParts[0]; // Get the username part
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Login Successful!'),
+          content: Text('Welcome back, $username!'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context); // Close the success dialog
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => HomeScreen()),
+                );
+              },
+              child: Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _showErrorDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Login Failed'),
+          content: Text('Invalid email or password. Please try again.'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text('OK'),
+            ),
+          ],
+        );
+      },
     );
   }
 }

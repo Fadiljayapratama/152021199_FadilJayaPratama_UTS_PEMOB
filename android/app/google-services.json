@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "496623883580",
+    "project_id": "tubes-4245e",
+    "storage_bucket": "tubes-4245e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:496623883580:android:882dc2654bbeea237cba39",
+        "android_client_info": {
+          "package_name": "com.example.project_pemob"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCUHH6V8_oFEFvKuJeDFnWY_49Wy5VcoVs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
